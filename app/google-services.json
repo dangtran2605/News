@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "744724721703",
+    "firebase_url": "https://news-a7795-default-rtdb.firebaseio.com",
+    "project_id": "news-a7795",
+    "storage_bucket": "news-a7795.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744724721703:android:0fe636590d86f61f3b9e02",
+        "android_client_info": {
+          "package_name": "com.tranvandang.news"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJBsOaZdGT2yVvw5HQ-LqZpFiec-nI3MQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

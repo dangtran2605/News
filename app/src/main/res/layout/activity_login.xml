@@ -93,7 +93,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/button"
+                android:id="@+id/button_login"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,9 +135,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/login_again"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:fontFamily="@font/poppins"
                     android:lineSpacingExtra="0sp"
                     android:text="don’t have an account ?"

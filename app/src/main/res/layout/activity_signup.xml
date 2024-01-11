@@ -51,13 +51,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_input"
                 android:hint=" Password" />
-            <EditText
-                android:id="@+id/cofirmPass"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/text_input"
-                android:hint=" Confirm password" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +64,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/button"
+                android:id="@+id/signup_button"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +113,9 @@
                     android:lineSpacingExtra="0sp"
                     android:text="Already have a account?"
                     android:textAppearance="@style/or_continue" />
+
                 <TextView
+                    android:id="@+id/login_again"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -127,7 +123,6 @@
                     android:text=" Log in"
                     android:textAppearance="@style/sign_text" />
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

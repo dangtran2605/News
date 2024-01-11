@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -93,7 +95,32 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 trendingAdapter = new TrendingAdapter(newsDetailList);
+
+                /*trendingAdapter.setOnItemClickListener(new TrendingAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(String key) {
+                        //tạo intent chuyển qua activity mới Main->Detail
+                        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
+                        //chuyển thêm data đính kèm
+                        intent.putExtra("news_id", key);
+                        intent.putExtra("from","main");
+                        //chạy intent
+                        startActivity(intent);
+                    }
+                });*/
                 recyclerTrending.setAdapter(trendingAdapter);
+                trendingAdapter.setOnItemClickListener(new TrendingAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(String key) {
+                        //tạo intent chuyển qua activity là Main->Detail
+                        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
+                        //chuyển thể data định kèm
+                        intent.putExtra("news_id", key);
+                        intent.putExtra("from","main");
+                        //chạy intent
+                        startActivity(intent);
+                    }
+                });
             }
 
 

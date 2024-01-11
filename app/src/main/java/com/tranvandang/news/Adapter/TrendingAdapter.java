@@ -19,6 +19,15 @@ import java.util.List;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myViewHolder> {
 
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(String key);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
     private List<NewsDetail> newsList;
 
     public TrendingAdapter(List<NewsDetail> newsList) {
@@ -27,6 +36,21 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myView
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         holder.bind(newsList.get(position));
+        // Set click listener for the item
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION && mListener != null) {
+                    // Lấy key từ NewsDetail
+                    NewsDetail clickedNews = newsList.get(adapterPosition);
+                    String key = clickedNews.getKey();
+
+                    // Gọi phương thức onItemClick của bộ lắng nghe
+                    mListener.onItemClick(key);
+                }
+            }
+        });
 
     }
     @Override

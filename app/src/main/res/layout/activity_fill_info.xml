@@ -22,6 +22,7 @@
             android:layout_marginTop="20dp">
 
             <ImageView
+                android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/back" />
@@ -55,16 +56,16 @@
             android:layout_margin="16dp"
             android:background="@drawable/elip"
             android:gravity="right|bottom">
-
             <LinearLayout
-                android:id="@+id/addAvt"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/frame"
                 android:gravity="center">
+
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/addAvt"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/avt" />
             </LinearLayout>

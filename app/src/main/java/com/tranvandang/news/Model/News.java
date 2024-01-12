@@ -8,32 +8,16 @@ public class News {
     public News() {
     }
 
-    public News(String title, String detail, String description, String url, String imgUrl1, Long countUser, Boolean status, String keyDitorial, String keyCategory) {
+    public News(String title, String detail, String description, String url, String imgUrl1, String keyDitorial, String keyCategory, Long countUser, Boolean status) {
         this.title = title;
         this.detail = detail;
         this.description = description;
         this.url = url;
         this.imgUrl1 = imgUrl1;
+        this.keyDitorial = keyDitorial;
+        this.keyCategory = keyCategory;
         this.countUser = countUser;
         this.status = status;
-        this.keyDitorial = keyDitorial;
-        this.keyCategory = keyCategory;
-    }
-
-    public String getKeyCategory() {
-        return keyCategory;
-    }
-
-    public void setKeyCategory(String keyCategory) {
-        this.keyCategory = keyCategory;
-    }
-
-    public String getKeyDitorial() {
-        return keyDitorial;
-    }
-
-    public void setKeyDitorial(String keyDitorial) {
-        this.keyDitorial = keyDitorial;
     }
 
     public String getKey() {
@@ -82,6 +66,22 @@ public class News {
 
     public void setImgUrl1(String imgUrl1) {
         this.imgUrl1 = imgUrl1;
+    }
+
+    public String getKeyDitorial() {
+        return keyDitorial;
+    }
+
+    public void setKeyDitorial(String keyDitorial) {
+        this.keyDitorial = keyDitorial;
+    }
+
+    public String getKeyCategory() {
+        return keyCategory;
+    }
+
+    public void setKeyCategory(String keyCategory) {
+        this.keyCategory = keyCategory;
     }
 
     public Long getCountUser() {

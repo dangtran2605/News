@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
 
@@ -24,7 +25,18 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText loginEmail, loginPassword;
     private TextView signupRedirectText;
-    private Button loginButton;
+    private TextView loginButton;
+
+
+    /*protected void  onStart(){
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null)
+        {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }*/
    @SuppressLint("WrongViewCast")
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginEmail = findViewById(R.id.userName);
         loginPassword = findViewById(R.id.passWord);
         loginButton = findViewById(R.id.button_login);
-        signupRedirectText = findViewById(R.id.login_again);
+        signupRedirectText = findViewById(R.id.signup_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

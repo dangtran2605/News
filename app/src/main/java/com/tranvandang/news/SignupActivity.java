@@ -1,5 +1,6 @@
 package com.tranvandang.news;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +14,28 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText signupEmail, signupPassword;
-    private Button signupButton;
+    private TextView signupButton;
     private TextView loginRedirectText;
 
+   /* @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null)
+        {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }*/
 
+
+    @SuppressLint("WrongViewCast")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);

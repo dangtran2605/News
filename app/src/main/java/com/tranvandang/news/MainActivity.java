@@ -8,9 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +33,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
+    FirebaseAuth auth;
+    Button button;
+    TextView textView;
+    FirebaseUser user;
     AtomicInteger tasksCounter = new AtomicInteger(0);
     RecyclerView recyclerTrending;
     TrendingAdapter trendingAdapter;
@@ -37,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        auth = FirebaseAuth.getInstance();
+        /*user = auth.getCurrentUser();
+        if(user != null)
+        {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+
+        }*/
         //anh xa
         recyclerTrending = findViewById(R.id.recyclerTrending);
         //set kieu layout hori hàng ngang veri hàng dọc

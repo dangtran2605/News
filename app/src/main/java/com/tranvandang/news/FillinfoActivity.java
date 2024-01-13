@@ -25,13 +25,9 @@ public class FillinfoActivity extends AppCompatActivity {
     }
     private LinearLayout themAvt;
     private ImageView imgAvt;
-
     private EditText editTextUsername, editTextFullname, editTextEmail, editTextPhone;
-
     private TextView textViewNext;
-
     private ImageView imageViewBack;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_info);
@@ -61,7 +57,6 @@ public class FillinfoActivity extends AppCompatActivity {
                 }
             }
         });
-
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,13 +65,14 @@ public class FillinfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
     private boolean ValidateFields()
     {
-        if (TextUtils.isEmpty(editTextUsername.getText().toString()) ||
+        if (
+                TextUtils.isEmpty(editTextUsername.getText().toString()) ||
                 TextUtils.isEmpty(editTextFullname.getText().toString()) ||
-                TextUtils.isEmpty(editTextEmail.getText().toString() )|| TextUtils.isEmpty(editTextPhone.getText().toString()))
+                TextUtils.isEmpty(editTextEmail.getText().toString())   ||
+                TextUtils.isEmpty(editTextPhone.getText().toString()))
         {
             showTin("Please fill in all fields!");
             return false;
@@ -92,5 +88,4 @@ public class FillinfoActivity extends AppCompatActivity {
             Glide.with(this).load(imagePath).into(imgAvt);
         }
     }
-
 }

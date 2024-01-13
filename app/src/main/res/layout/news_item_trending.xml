@@ -3,8 +3,7 @@
     android:layout_width="358dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="3dp"
-    android:background="@drawable/custom_edit">
+    android:layout_margin="3dp">
     <ImageView
         android:id="@+id/imgViewNews"
         android:layout_width="match_parent"

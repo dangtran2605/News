@@ -47,30 +47,36 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/ellipse_10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:background="@drawable/elip"
-            android:gravity="right|bottom">
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="-16dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/elip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <LinearLayout
+                android:id="@+id/addAvt"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/frame"
                 android:gravity="center">
-
                 <ImageView
-                    android:id="@+id/addAvt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/avt" />
             </LinearLayout>
-
         </LinearLayout>
+
         <EditText
             android:layout_marginTop="10dp"
             android:id="@+id/userName"

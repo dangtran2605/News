@@ -23,8 +23,8 @@ public class FillinfoActivity extends AppCompatActivity {
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-    private LinearLayout linearLayoutDonha;
-    private ImageView imageViewAvt;
+    private LinearLayout themAvt;
+    private ImageView imgAvt;
 
     private EditText editTextUsername, editTextFullname, editTextEmail, editTextPhone;
 
@@ -35,15 +35,15 @@ public class FillinfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_info);
-        imageViewAvt = findViewById(R.id.addAvt);
+        imgAvt = findViewById(R.id.avt);
         editTextUsername = findViewById(R.id.userName);
         editTextFullname = findViewById(R.id.fullName);
         editTextEmail = findViewById(R.id.email);
         editTextPhone = findViewById(R.id.phone);
         textViewNext = findViewById(R.id.button_labe);
         imageViewBack = findViewById(R.id.back_button);
-        linearLayoutDonha = findViewById(R.id.ellipse_10);
-        imageViewAvt.setOnClickListener(new View.OnClickListener() {
+        themAvt = findViewById(R.id.addAvt);
+        themAvt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -89,9 +89,7 @@ public class FillinfoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 1 && data != null)
         {
             String imagePath = data.getData().toString();
-            Glide.with(this).load(imagePath).into(imageViewAvt);
-            linearLayoutDonha.setVisibility(View.VISIBLE);
-            imageViewAvt.setVisibility(View.VISIBLE);
+            Glide.with(this).load(imagePath).into(imgAvt);
         }
     }
 

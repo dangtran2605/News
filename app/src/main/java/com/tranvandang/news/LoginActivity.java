@@ -9,6 +9,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,22 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuth(account.getIdToken());
+            } catch (ApiException e) {
+                Log.e("SignIn", "Error getting signed-in account: " + e.getStatusCode());
+                Toast.makeText(this, "Error getting signed-in account", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private ImageView imageViewGoogle;
     private FirebaseAuth auth;
@@ -53,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = mGog.getSignInIntent();
         startActivityForResult(intent,RC_SIGN_IN);
     }
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -68,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
     private void firebaseAuth(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
         auth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -78,22 +95,21 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful())
                 {
                     FirebaseUser user = auth.getCurrentUser();
+                    HashMap<String,String> map = new HashMap<>();
+                    map.put("id",user.getUid());
+                    map.put("name",user.getDisplayName());
+                    map.put("profile",user.getPhotoUrl().toString());
+                   /* FirebaseUser user = auth.getCurrentUser();
                     Map<String, String> map = new HashMap<>();
-
-// Kiểm tra và thêm 'id' vào map
                     if (user.getUid() != null) {
                         map.put("id", user.getUid());
                     }
-
-// Kiểm tra và thêm 'name' vào map
                     if (user.getDisplayName() != null) {
                         map.put("name", user.getDisplayName());
                     }
-
-// Kiểm tra và thêm 'profile' vào map
                     if (user.getPhotoUrl() != null) {
                         map.put("profile", user.getPhotoUrl().toString());
-                    }
+                    }*/
                     database.getReference().child("user").child(user.getUid()).setValue(map);
                     Intent intent = new Intent(LoginActivity.this,FillinfoActivity.class);
                     startActivity(intent);
@@ -118,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }*/
-   @SuppressLint({"WrongViewCast", "MissingInflatedId"})
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,20 +3,19 @@
     android:layout_width="358dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    >
     <ImageView
         android:id="@+id/imgViewNews"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/test"/>
+        android:src="@drawable/russ"/>
     <TextView
         android:id="@+id/textCate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
-        android:fontFamily="@font/poppins"
         android:layout_marginLeft="10dp"
         android:textColor="@color/xam2"
         android:textSize="16sp"
@@ -26,9 +25,8 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
         android:layout_marginLeft="10dp"
-        android:text="Russia Đấm chết thằng Ukareina trên đất Mỹ: Tổng thống Vl"
+        android:text="Russia ákdmaskdkawdkawd"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -44,7 +42,7 @@
             android:id="@+id/imgDito"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/bbc"
+            android:src="@drawable/thongbao"
             />
         <TextView
             android:id="@+id/textNameDito"
@@ -53,7 +51,6 @@
             android:text="BCC erope"
             android:textStyle="bold"
             android:textColor="@color/xam2"
-            android:fontFamily="@font/poppins"
             android:textSize="16sp"
             android:gravity="top"
             android:layout_marginLeft="5dp"

@@ -8,13 +8,16 @@
     <ImageView
         android:id="@+id/imgViewNews"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_margin="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test"
         />
     <TextView
         android:id="@+id/textCate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
         android:text="Category"
         android:layout_marginLeft="10dp"
         android:textColor="@color/xam2"
@@ -27,9 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:text="Russia ákdmaskdkawdkawd"
-        android:textColor="@color/black"
+        android:textColor="#4E4B66"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_medium"
         android:lineSpacingExtra="0sp"
         android:gravity="top"
         />
@@ -41,6 +45,7 @@
         <ImageView
             android:id="@+id/imgDito"
             android:layout_width="20dp"
+            android:src="@drawable/bbc"
             android:layout_height="20dp"
             />
         <TextView
@@ -49,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="BCC erope"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins"
             android:textColor="@color/xam2"
             android:textSize="16sp"
             android:gravity="top"

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tranvandang.news.Adapter.CategoryAdapter;
 import com.tranvandang.news.Adapter.LatestAdapter;
-import com.tranvandang.news.Adapter.SeeallTrendingAdapter;
 import com.tranvandang.news.Adapter.TrendingAdapter;
 import com.tranvandang.news.Model.Category;
 import com.tranvandang.news.Model.Ditorial;
@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity implements TrendingAdapter.OnItemClickListener, CategoryAdapter.OnItemCateClickListener, LatestAdapter.OnItemLatestClickListener {
-    FirebaseAuth auth;
-    Button button;
-    TextView seeAllTrending,seeAllLatest;
-    FirebaseUser user;
-    AtomicInteger tasksCounter = new AtomicInteger(0);
 
+    TextView seeAllTrending,seeAllLatest;
+    FirebaseAuth auth;
+    FirebaseUser user;
+
+    ImageView imgProfile, imgEx, imgBm;
 
     RecyclerView recyclerTrending, recycCate, recLatest;
     CategoryAdapter categoryAdapter;
@@ -51,25 +51,69 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
-        /*user = auth.getCurrentUser();
-        if(user != null)
+        user = auth.getCurrentUser();
+        if(user == null)
         {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
 
-        }*/
-        //anh xa
-        recyclerTrending = findViewById(R.id.recyclerTrending);
-        recycCate = findViewById(R.id.recCate);
-        recLatest = findViewById(R.id.recNews);
-        seeAllTrending = findViewById(R.id.seeAllTrend);
-        seeAllLatest = findViewById(R.id.seeAllLatest);
-        seeAllTrending.setOnClickListener(view -> onBack() );
-        //set kieu layout hori hàng ngang veri hàng dọc
-        recyclerTrending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recycCate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recLatest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        //lay du lieu
+        }
+        else{
+            //anh xa
+            imgProfile = findViewById(R.id.profile);
+            imgProfile.setOnClickListener(view -> onProfile());
+            recyclerTrending = findViewById(R.id.recyclerTrending);
+            recycCate = findViewById(R.id.recCate);
+            recLatest = findViewById(R.id.recNews);
+            seeAllTrending = findViewById(R.id.seeAllTrend);
+            seeAllLatest = findViewById(R.id.seeAllLatest);
+            seeAllTrending.setOnClickListener(view -> onBack() );
+            //set kieu layout hori hàng ngang veri hàng dọc
+            recyclerTrending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            recycCate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            recLatest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            //lay du lieu
+
+            DatabaseReference dataCate = FirebaseDatabase.getInstance().getReference("categories");
+            dataCate.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Category category = dataSnapshot.getValue(Category.class);
+                        category.setKey(dataSnapshot.getKey());
+                        categoryList.add(category);
+                    }
+                    categoryAdapter = new CategoryAdapter(categoryList,MainActivity.this);
+                    recycCate.setAdapter(categoryAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+    }
+
+    private void onProfile() {
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void onBack() {
+        Intent intent = new Intent(MainActivity.this, SeeallTrendingActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemCateClick(String cateKey) {
+        AtomicInteger tasksCounter2 = new AtomicInteger(0);
+        latestList.clear();
+        fillLatest(cateKey, tasksCounter2);
+    }
+    public void fillTrending(AtomicInteger tasksCounter){
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dataRefNews = data.child("news");
         final int[] dem = {0};
@@ -94,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
                                 Ditorial dito=  snapshot.getValue(Ditorial.class);
                                 newsDetail.setLogoDitoUrl(dito.getLogoUrl());
                                 newsDetail.setNameDitorial(dito.getName());
-                                taskCompleted();
+                                taskCompleted(tasksCounter);
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                taskCompleted();
+                                taskCompleted(tasksCounter);
                             }
 
 
@@ -109,13 +153,13 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Category cate = snapshot.getValue(Category.class);
                                 newsDetail.setNameCategory(cate.getName());
-                                taskCompleted();
+                                taskCompleted(tasksCounter);
 
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                taskCompleted();
+                                taskCompleted(tasksCounter);
                             }
 
                         });
@@ -136,38 +180,6 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
             }
 
         });
-        DatabaseReference dataCate = data.child("categories");
-        dataCate.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Category category = dataSnapshot.getValue(Category.class);
-                    category.setKey(dataSnapshot.getKey());
-                    taskCompletedCate();
-                    categoryList.add(category);
-                }
-                categoryAdapter = new CategoryAdapter(categoryList,MainActivity.this);
-                recycCate.setAdapter(categoryAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void onBack() {
-        Intent intent = new Intent(MainActivity.this, SeeallTrendingActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onItemCateClick(String cateKey) {
-        AtomicInteger tasksCounter2 = new AtomicInteger(0);
-        latestList.clear();
-        fillLatest(cateKey, tasksCounter2);
     }
     public void fillLatest(String keyCate,AtomicInteger tasksCounter2){
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
@@ -244,14 +256,7 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
         intent.putExtra("from", "main");
         startActivity(intent);
     }
-    private void taskCompletedCate(){
-        if (tasksCounter.incrementAndGet() == newsDetailList.size() * 2) {
-            // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
-            categoryAdapter = new CategoryAdapter(categoryList,this);
-            recycCate.setAdapter(categoryAdapter);
 
-        }
-    }
     private void taskCompletedLatest(AtomicInteger tasksCounter2) {
         if (tasksCounter2.incrementAndGet() == latestList.size() * 2) {
             // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
@@ -259,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
             recLatest.setAdapter(latestAdapter);
         }
     }
-    private void taskCompleted() {
+    private void taskCompleted(AtomicInteger tasksCounter) {
         if (tasksCounter.incrementAndGet() == newsDetailList.size() * 2) {
             // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
             trendingAdapter = new TrendingAdapter(newsDetailList,this);
@@ -270,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
     @Override
     protected void onStart() {
         super.onStart();
+        fillTrending( new AtomicInteger(0));
         fillLatest("-idC1",new AtomicInteger(0));
     }
 

@@ -41,6 +41,8 @@ public class SignupActivity extends AppCompatActivity {
     private Calendar calendar;
     private Uri selectedImageUri;
 
+    private TextView fBack;
+
    /* @Override
     public void onStart(){
         super.onStart();
@@ -54,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
     }*/
 
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
@@ -74,6 +76,14 @@ public class SignupActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         themAvt = findViewById(R.id.addAvt);
         imgAvt = findViewById(R.id.avt);
+        fBack = findViewById(R.id.textViewBack);
+
+        fBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         themAvt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

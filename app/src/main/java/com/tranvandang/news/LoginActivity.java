@@ -6,12 +6,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,9 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
+    private static final String PREF_NAME = "MyPrefs";
+    private static final String KEY_REMEMBER_ME = "rememberMe";
     private ImageView imageViewGoogle;
     private FirebaseAuth auth;
+
+    private CheckBox checkBox;
     private EditText loginEmail, loginPassword;
     private TextView signupRedirectText;
     private TextView loginButton;
@@ -134,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        checkBox = findViewById(R.id.checkbox);
         textViewForgot = findViewById(R.id.forgot_the_);
         auth = FirebaseAuth.getInstance();
         loginEmail = findViewById(R.id.userName);
@@ -153,6 +160,16 @@ public class LoginActivity extends AppCompatActivity {
            public void onClick(View v) {
             googleSignIn();
            }
+       });
+       SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+       boolean rememberMe = prefs.getBoolean(KEY_REMEMBER_ME, false);
+       checkBox.setChecked(rememberMe);
+       // Thêm sự kiện lắng nghe cho CheckBox
+       checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+           // Lưu trạng thái vào SharedPreferences khi trạng thái thay đổi
+           SharedPreferences.Editor editor = prefs.edit();
+           editor.putBoolean(KEY_REMEMBER_ME, isChecked);
+           editor.apply();
        });
         textViewForgot.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,7 @@
 package com.tranvandang.news.Model;
 
 public class News {
-    String key, title ,detail, description, url,imgUrl1,keyDitorial, keyCategory;
+    String key, title ,detail, desctiption, url,imgUrl1,keyDitorial, keyCategory;
     Long countUser;
     Boolean status;
 
@@ -11,7 +11,7 @@ public class News {
     public News(String title, String detail, String description, String url, String imgUrl1, String keyDitorial, String keyCategory, Long countUser, Boolean status) {
         this.title = title;
         this.detail = detail;
-        this.description = description;
+        this.desctiption = description;
         this.url = url;
         this.imgUrl1 = imgUrl1;
         this.keyDitorial = keyDitorial;
@@ -44,12 +44,12 @@ public class News {
         this.detail = detail;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesctiption() {
+        return desctiption;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesctiption(String description) {
+        this.desctiption = description;
     }
 
     public String getUrl() {

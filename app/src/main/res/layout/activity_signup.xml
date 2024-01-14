@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,20 +31,106 @@
             <TextView
                 android:id="@+id/welcome_bac"
                 android:layout_width="222dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:gravity="top"
                 android:lineSpacingExtra="0sp"
                 android:text="Signup to get Started"
                 android:textAppearance="@style/welcome_bac" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avt"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="-16dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/elip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:id="@+id/addAvt"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/frame"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/avt" />
+                </LinearLayout>
+            </LinearLayout>
 
             <EditText
+                android:layout_marginTop="10dp"
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="30dp"
                 android:background="@drawable/text_input"
-                android:hint=" Username" />
+                android:hint=" Email" />
 
+            <EditText
+                android:id="@+id/fullName"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/text_input"
+                android:hint=" Full Name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Date of Birth"
+                android:textAppearance="@style/remember_me" />
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_input"
+                    android:hint=" 01"/>
+                <EditText
+                    android:id="@+id/month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_input"
+                    android:hint=" 01"/>
+                <EditText
+                    android:id="@+id/year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/text_input"
+                    android:hint=" 2002"/>
+                <ImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/calendar"
+                    />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/phone"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/text_input"
+                android:hint=" Phone Number" />
             <EditText
                 android:id="@+id/passWord"
                 android:layout_width="match_parent"
@@ -52,7 +138,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_input"
                 android:hint=" Password" />
-
+            <EditText
+                android:id="@+id/passWordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_input"
+                android:hint=" Confirm Password" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,6 +170,17 @@
 
 
 
+            <TextView
+                android:id="@+id/or_continue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:lineSpacingExtra="0sp"
+                android:text="or continue with"
+                android:textAppearance="@style/or_continue" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -86,6 +189,12 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="0" />
+
+                <ImageView
+                    android:id="@+id/button_gog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gg" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,4 +223,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

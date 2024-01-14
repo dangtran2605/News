@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+
 import com.tranvandang.news.Model.Category;
 import com.tranvandang.news.Model.Ditorial;
 import com.tranvandang.news.Model.News;
-import com.tranvandang.news.ViewModel.NewsDetail;
+
 
 public class DetailNewsActivity extends AppCompatActivity {
     TextView tvTitle, tvDescription, tvCate,nameDito ;
@@ -29,7 +26,6 @@ public class DetailNewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-
         tvTitle = findViewById(R.id.textTitle);
         tvDescription = findViewById(R.id.textDescription);
         tvCate = findViewById(R.id.textCate);
@@ -39,7 +35,7 @@ public class DetailNewsActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> onBack());
         if (getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
-            String keyNews = extras.getString("news_id");
+            String keyNews = extras.getString("NEWS_KEY");
             if(keyNews == null){
                 Toast.makeText(DetailNewsActivity.this, "No data", Toast.LENGTH_SHORT).show();
             }
@@ -52,8 +48,13 @@ public class DetailNewsActivity extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
                             News news = dataSnapshot.getValue(News.class);
                             if (news != null) {
-                                tvTitle.setText(news.getTitle());
-                                tvDescription.setText(news.getDescription());
+                                if(tvTitle != null){
+                                    tvTitle.setText(news.getTitle());
+                                }
+                                if(tvDescription != null){
+                                    tvDescription.setText(news.getDesctiption());
+                                }
+
                                 //Lênh fill ảnh từ firebase ra imageView
                                 Glide.with(imgNews.getContext())
                                         .load(news.getImgUrl1())
@@ -66,7 +67,10 @@ public class DetailNewsActivity extends AppCompatActivity {
                                         Glide.with(imgDito.getContext())
                                                 .load(dito.getLogoUrl())
                                                 .into(imgDito);
-                                        nameDito.setText(dito.getName());
+                                        if(nameDito != null){
+                                            nameDito.setText(dito.getName());
+                                        }
+
                                     }
 
                                     @Override
@@ -79,7 +83,10 @@ public class DetailNewsActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         Category cate = snapshot.getValue(Category.class);
-                                        tvCate.setText(cate.getName());
+                                        if(tvCate != null){
+                                            tvCate.setText(cate.getName());
+                                        }
+
 
                                     }
 
@@ -92,7 +99,7 @@ public class DetailNewsActivity extends AppCompatActivity {
                             }
 
                         } else {
-                            Toast.makeText(DetailNewsActivity.this, "No data", Toast.LENGTH_SHORT).show();
+
                         }
                     }
 

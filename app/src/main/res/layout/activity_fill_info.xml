@@ -84,6 +84,7 @@
             android:layout_height="48dp"
             android:background="@drawable/text_input"
             android:hint=" Username" />
+
         <EditText
             android:id="@+id/fullName"
             android:layout_marginTop="10dp"
@@ -91,13 +92,7 @@
             android:layout_height="48dp"
             android:background="@drawable/text_input"
             android:hint=" Full Name" />
-        <EditText
-            android:id="@+id/email"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/text_input"
-            android:hint=" Email Address" />
+
         <EditText
             android:id="@+id/phone"
             android:layout_marginTop="10dp"

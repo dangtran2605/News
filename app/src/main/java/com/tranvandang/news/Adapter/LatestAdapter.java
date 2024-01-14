@@ -1,5 +1,6 @@
 package com.tranvandang.news.Adapter;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
-
 import com.tranvandang.news.R;
 import com.tranvandang.news.ViewModel.NewsDetail;
 
 import java.util.List;
 
-public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myViewHolder> {
+public class LatestAdapter extends RecyclerView.Adapter<LatestAdapter.myViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(String newsKey);  // Sửa đổi tham số dựa trên kiểu khóa của bạn
+    public interface OnItemLatestClickListener {
+        void onItemLatestClick(String newsKey);  // Sửa đổi tham số dựa trên kiểu khóa của bạn
     }
     private List<NewsDetail> newsList;
-    private OnItemClickListener listener;
+    private OnItemLatestClickListener listener;
 
-    public TrendingAdapter(List<NewsDetail> newsList,OnItemClickListener listener) {
+    public LatestAdapter(List<NewsDetail> newsList,OnItemLatestClickListener listener) {
 
         this.newsList = newsList;
         this.listener = listener;
@@ -46,7 +45,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myView
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_trending, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_latest, parent, false);
         return new myViewHolder(view);
     }
 
@@ -57,11 +56,11 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myView
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleNews = itemView.findViewById(R.id.textTitle);
-            category = itemView.findViewById(R.id.textCate);
-            nameDito = itemView.findViewById(R.id.textNameDito);
-            imageNews = itemView.findViewById(R.id.imgViewNews);
-            imgDitorial = itemView.findViewById(R.id.imgDito);
+            titleNews = itemView.findViewById(R.id.title);
+            category = itemView.findViewById(R.id.categories);
+            nameDito = itemView.findViewById(R.id.nameD);
+            imageNews = itemView.findViewById(R.id.img);
+            imgDitorial = itemView.findViewById(R.id.imgD);
         }
         //fill du lieu
         public void bind(NewsDetail model){
@@ -81,10 +80,11 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.myView
                     if (position != RecyclerView.NO_POSITION) {
                         // Lấy khóa hoặc bất kỳ dữ liệu nào bạn muốn chuyển sang hoạt động chi tiết
                         String newsKey = newsList.get(position).getKey(); // Giả sử bạn có một phương thức getKey() trong lớp NewsDetail của bạn
-                        listener.onItemClick(newsKey);
+                        listener.onItemLatestClick(newsKey);
                     }
                 }
             });
         }
     }
 }
+

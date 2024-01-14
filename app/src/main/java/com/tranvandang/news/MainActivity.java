@@ -7,21 +7,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.tranvandang.news.Adapter.CategoryAdapter;
+import com.tranvandang.news.Adapter.LatestAdapter;
 import com.tranvandang.news.Adapter.TrendingAdapter;
 import com.tranvandang.news.Model.Category;
 import com.tranvandang.news.Model.Ditorial;
@@ -32,16 +30,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TrendingAdapter.OnItemClickListener, CategoryAdapter.OnItemCateClickListener, LatestAdapter.OnItemLatestClickListener {
     FirebaseAuth auth;
     Button button;
     TextView textView;
     FirebaseUser user;
     AtomicInteger tasksCounter = new AtomicInteger(0);
-    RecyclerView recyclerTrending;
-    TrendingAdapter trendingAdapter;
-    List<NewsDetail> newsDetailList = new ArrayList<>();
 
+
+    RecyclerView recyclerTrending, recycCate, recLatest;
+    CategoryAdapter categoryAdapter;
+    TrendingAdapter trendingAdapter;
+    LatestAdapter latestAdapter;
+    List<NewsDetail> newsDetailList = new ArrayList<>();
+    List<Category> categoryList = new ArrayList<>();
+    List<NewsDetail> latestList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +59,13 @@ public class MainActivity extends AppCompatActivity {
         }*/
         //anh xa
         recyclerTrending = findViewById(R.id.recyclerTrending);
+        recycCate = findViewById(R.id.recCate);
+        recLatest = findViewById(R.id.recNews);
+
         //set kieu layout hori hàng ngang veri hàng dọc
         recyclerTrending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recycCate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recLatest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         //lay du lieu
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dataRefNews = data.child("news");
@@ -70,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
                     if (count >= 5000&& dem[0] <5) {
                         News news = dataSnapshot.getValue(News.class);
                         NewsDetail newsDetail = new NewsDetail();
+                        newsDetail.setKey(dataSnapshot.getKey());
                         newsDetail.setTitle(news.getTitle());
                         newsDetail.setDetail(news.getDetail());
-                        newsDetail.setDescription(news.getDescription());
+                        newsDetail.setDescription(news.getDesctiption());
                         newsDetail.setUrl(news.getUrl());
                         newsDetail.setImgUrl1(news.getImgUrl1());
                         newsDetail.setStatus(news.getStatus());
@@ -111,33 +120,10 @@ public class MainActivity extends AppCompatActivity {
                         dem[0]++;
                     }
                 }
-                trendingAdapter = new TrendingAdapter(newsDetailList);
+                trendingAdapter = new TrendingAdapter(newsDetailList,MainActivity.this);
 
-                /*trendingAdapter.setOnItemClickListener(new TrendingAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(String key) {
-                        //tạo intent chuyển qua activity mới Main->Detail
-                        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
-                        //chuyển thêm data đính kèm
-                        intent.putExtra("news_id", key);
-                        intent.putExtra("from","main");
-                        //chạy intent
-                        startActivity(intent);
-                    }
-                });*/
                 recyclerTrending.setAdapter(trendingAdapter);
-                trendingAdapter.setOnItemClickListener(new TrendingAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(String key) {
-                        //tạo intent chuyển qua activity là Main->Detail
-                        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
-                        //chuyển thể data định kèm
-                        intent.putExtra("news_id", key);
-                        intent.putExtra("from","main");
-                        //chạy intent
-                        startActivity(intent);
-                    }
-                });
+
             }
 
 
@@ -147,23 +133,153 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        DatabaseReference dataCate = data.child("categories");
+        dataCate.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Category category = dataSnapshot.getValue(Category.class);
+                    category.setKey(dataSnapshot.getKey());
+                    taskCompletedCate();
+                    categoryList.add(category);
+                }
+                categoryAdapter = new CategoryAdapter(categoryList,MainActivity.this);
+                recycCate.setAdapter(categoryAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    @Override
+    public void onItemCateClick(String cateKey) {
+        AtomicInteger tasksCounter2 = new AtomicInteger(0);
+        latestList.clear();
+        fillLatest(cateKey, tasksCounter2);
+    }
+    public void fillLatest(String keyCate,AtomicInteger tasksCounter2){
+        DatabaseReference data = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference dataRefNews = data.child("news");
+        final int[] dem = {0};
+        dataRefNews.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Long count = (Long) dataSnapshot.child("countUser").getValue();
+                    if (dem[0] <5&& dataSnapshot.child("keyCategory").getValue().toString().equals(keyCate)) {
+                        News news = dataSnapshot.getValue(News.class);
+                        NewsDetail newsDetail = new NewsDetail();
+                        newsDetail.setKey(dataSnapshot.getKey());
+                        newsDetail.setTitle(news.getTitle());
+                        newsDetail.setDetail(news.getDetail());
+                        newsDetail.setDescription(news.getDesctiption());
+                        newsDetail.setUrl(news.getUrl());
+                        newsDetail.setImgUrl1(news.getImgUrl1());
+                        newsDetail.setStatus(news.getStatus());
+                        data.child("ditorial").child(news.getKeyDitorial()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Ditorial dito=  snapshot.getValue(Ditorial.class);
+                                newsDetail.setLogoDitoUrl(dito.getLogoUrl());
+                                newsDetail.setNameDitorial(dito.getName());
+                                taskCompletedLatest(tasksCounter2);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                taskCompletedLatest(tasksCounter2);
+                            }
 
 
+                        });
+                        data.child("categories").child(news.getKeyCategory()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Category cate = snapshot.getValue(Category.class);
+                                newsDetail.setNameCategory(cate.getName());
+                                taskCompletedLatest(tasksCounter2);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                taskCompletedLatest(tasksCounter2);
+                            }
+
+                        });
+                        latestList.add(newsDetail);
+                        dem[0]++;
+                    }
+                }
+                latestAdapter = new LatestAdapter(latestList,MainActivity.this);
+
+                recLatest.setAdapter(latestAdapter);
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }
+
+    @Override
+    public void onItemClick(String newsKey) {
+        // Xử lý sự kiện khi một mục được nhấp, ví dụ: mở hoạt động chi tiết với khóa được nhấp
+        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
+        intent.putExtra("NEWS_KEY", newsKey);
+        intent.putExtra("from", "main");
+        startActivity(intent);
+    }
+    private void taskCompletedCate(){
+        if (tasksCounter.incrementAndGet() == newsDetailList.size() * 2) {
+            // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
+            categoryAdapter = new CategoryAdapter(categoryList,this);
+            recycCate.setAdapter(categoryAdapter);
+
+        }
+    }
+    private void taskCompletedLatest(AtomicInteger tasksCounter2) {
+        if (tasksCounter2.incrementAndGet() == latestList.size() * 2) {
+            // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
+            latestAdapter = new LatestAdapter(latestList,this);
+            recLatest.setAdapter(latestAdapter);
+        }
     }
     private void taskCompleted() {
         if (tasksCounter.incrementAndGet() == newsDetailList.size() * 2) {
             // Tất cả công việc đã hoàn thành, cập nhật Adapter và RecyclerView
-            trendingAdapter = new TrendingAdapter(newsDetailList);
+            trendingAdapter = new TrendingAdapter(newsDetailList,this);
+
             recyclerTrending.setAdapter(trendingAdapter);
         }
     }
     @Override
     protected void onStart() {
         super.onStart();
+        fillLatest("-idC1",new AtomicInteger(0));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void onItemLatestClick(String newsKey) {
+        // Xử lý sự kiện khi một mục được nhấp, ví dụ: mở hoạt động chi tiết với khóa được nhấp
+        Intent intent = new Intent(MainActivity.this, DetailNewsActivity.class);
+        intent.putExtra("NEWS_KEY", newsKey);
+        intent.putExtra("from", "main");
+        startActivity(intent);
     }
 }

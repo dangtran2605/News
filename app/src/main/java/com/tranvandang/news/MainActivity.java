@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tranvandang.news.Adapter.CategoryAdapter;
 import com.tranvandang.news.Adapter.LatestAdapter;
+import com.tranvandang.news.Adapter.SeeallTrendingAdapter;
 import com.tranvandang.news.Adapter.TrendingAdapter;
 import com.tranvandang.news.Model.Category;
 import com.tranvandang.news.Model.Ditorial;
@@ -33,7 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MainActivity extends AppCompatActivity implements TrendingAdapter.OnItemClickListener, CategoryAdapter.OnItemCateClickListener, LatestAdapter.OnItemLatestClickListener {
     FirebaseAuth auth;
     Button button;
-    TextView textView;
+    TextView seeAllTrending,seeAllLatest;
     FirebaseUser user;
     AtomicInteger tasksCounter = new AtomicInteger(0);
 
@@ -61,7 +62,9 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
         recyclerTrending = findViewById(R.id.recyclerTrending);
         recycCate = findViewById(R.id.recCate);
         recLatest = findViewById(R.id.recNews);
-
+        seeAllTrending = findViewById(R.id.seeAllTrend);
+        seeAllLatest = findViewById(R.id.seeAllLatest);
+        seeAllTrending.setOnClickListener(view -> onBack() );
         //set kieu layout hori hàng ngang veri hàng dọc
         recyclerTrending.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recycCate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -154,6 +157,12 @@ public class MainActivity extends AppCompatActivity implements TrendingAdapter.O
         });
 
     }
+
+    private void onBack() {
+        Intent intent = new Intent(MainActivity.this, SeeallTrendingActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onItemCateClick(String cateKey) {
         AtomicInteger tasksCounter2 = new AtomicInteger(0);

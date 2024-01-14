@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:src="@drawable/russ"/>
+        />
     <TextView
         android:id="@+id/textCate"
         android:layout_width="wrap_content"
@@ -42,7 +42,6 @@
             android:id="@+id/imgDito"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/thongbao"
             />
         <TextView
             android:id="@+id/textNameDito"

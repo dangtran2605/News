@@ -32,16 +32,19 @@
         <activity android:name=".ForgotpassActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".FillinfoActivity"
-            android:exported="true">
-        </activity>
 
         <activity android:name=".SignupActivity"
             android:exported="true">
         </activity>
+
+        <activity android:name=".SeeallTrendingActivity"
+            android:exported="true">
+
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

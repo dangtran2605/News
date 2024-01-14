@@ -30,6 +30,7 @@ public class DetailNewsActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.textDescription);
         tvCate = findViewById(R.id.textCate);
         btnBack = findViewById(R.id.imgBack);
+        nameDito = findViewById(R.id.textNameDito);
         imgDito = findViewById(R.id.imgLogoDito);
         imgNews = findViewById(R.id.imgNews);
         btnBack.setOnClickListener(v -> onBack());
@@ -119,8 +120,8 @@ public class DetailNewsActivity extends AppCompatActivity {
                 Intent intent= new Intent(DetailNewsActivity.this, MainActivity.class);
                 startActivity(intent);
             }else{
-               /* Intent intent= new Intent(DetailNewsActivity.this, TrendingActivity.class);
-                startActivity(intent);*/
+                Intent intent= new Intent(DetailNewsActivity.this, SeeallTrendingActivity.class);
+                startActivity(intent);
             }
         }
     }

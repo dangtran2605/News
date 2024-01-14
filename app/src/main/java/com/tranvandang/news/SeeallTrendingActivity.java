@@ -53,6 +53,7 @@ public class SeeallTrendingActivity extends AppCompatActivity implements Trendin
                     if (count >= 5000) {
                         News news = dataSnapshot.getValue(News.class);
                         NewsDetail newsDetail = new NewsDetail();
+                        newsDetail.setKey(dataSnapshot.getKey());
                         newsDetail.setTitle(news.getTitle());
                         newsDetail.setDetail(news.getDetail());
                         newsDetail.setDescription(news.getDesctiption());

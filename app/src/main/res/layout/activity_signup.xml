@@ -20,10 +20,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textViewBack"
+                android:layout_width="62dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Back" />
 
             <TextView
                 android:layout_width="167dp"
-                android:layout_height="wrap_content"
+                android:layout_height="57dp"
                 android:layout_marginTop="20dp"
                 android:text="Hello!"
                 android:textAppearance="@style/hello_again" />
@@ -42,16 +51,17 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="10dp"
                 android:gravity="center">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+                    android:layout_centerInParent="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="-16dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/elip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:src="@drawable/elip" />
                 <LinearLayout
                     android:id="@+id/addAvt"
                     android:layout_width="24dp"
@@ -170,16 +180,6 @@
 
 
 
-            <TextView
-                android:id="@+id/or_continue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:lineSpacingExtra="0sp"
-                android:text="or continue with"
-                android:textAppearance="@style/or_continue" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,11 +190,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0" />
 
-                <ImageView
-                    android:id="@+id/button_gog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/gg" />
+
             </LinearLayout>
 
             <LinearLayout

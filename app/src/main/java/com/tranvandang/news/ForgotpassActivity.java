@@ -71,6 +71,5 @@ public class ForgotpassActivity extends AppCompatActivity
             onBackPressed();
         }
     });
-
     }
 }

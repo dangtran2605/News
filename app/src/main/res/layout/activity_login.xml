@@ -22,7 +22,7 @@
             <TextView
                 android:id="@+id/hello_again"
                 android:layout_width="169dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginTop="20dp"
                 android:text="Hello"
                 android:textAppearance="@style/ag" />
@@ -64,7 +64,7 @@
 
                 <CheckBox
                     android:id="@+id/checkbox"
-                    android:layout_width="24dp"
+                    android:layout_width="20dp"
                     android:layout_height="24dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
